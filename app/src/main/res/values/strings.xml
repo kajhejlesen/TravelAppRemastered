@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Travel App remastered</string>
+    <string name="action_settings">Settings</string>
+    <string name="check_in_text">Enter Check-in Station:</string>
+    <string name="check_out_text">Enter Check-out Station:</string>
+    <string name="check_in_button">Check In</string>
+    <string name="check_out_button">Check Out</string>
+
+</resources>
