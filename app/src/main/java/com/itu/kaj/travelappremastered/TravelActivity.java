@@ -1,6 +1,5 @@
 package com.itu.kaj.travelappremastered;
 
-import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +15,14 @@ public class TravelActivity extends ActionBarActivity {
     private static String endStation = "";
     protected static final String LAST_START = "start";
     protected static final String LAST_DESTINATION = "destination";
+    protected static final String CHECK_IN_BUTTON = "check_in_button";
+    protected static final String CHECK_OUT_BUTTON = "check_out_button";
+    protected static final String CHECK_IN_ENABLED = "check_in_enabled";
+    protected static final String CHECK_OUT_ENABLED = "check_out_enabled";
+    protected static final String CHECK_IN_TEXT = "check_in_text";
+    protected static final String CHECK_OUT_TEXT = "check_out_text";
+
+    Button checkInButton, checkOutButton;
 
 
     @Override
@@ -23,7 +30,7 @@ public class TravelActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel);
 
-        Button checkInButton = (Button) findViewById(R.id.check_in_button);
+        checkInButton = (Button) findViewById(R.id.check_in_button);
         checkInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,12 +46,11 @@ public class TravelActivity extends ActionBarActivity {
                     checkOutButton.setEnabled(true);
                     checkInButton.setEnabled(false);
                     checkOutText.setEnabled(true);
-                    TravelActivity.endStation = "";
                 }
             }
         });
 
-        Button checkOutButton = (Button) findViewById(R.id.check_out_button);
+        checkOutButton = (Button) findViewById(R.id.check_out_button);
         checkOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,12 +109,34 @@ public class TravelActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(LAST_START, startStation);
         outState.putString(LAST_DESTINATION, endStation);
+        outState.putBoolean(CHECK_IN_BUTTON, checkInButton.isEnabled());
+        outState.putBoolean(CHECK_OUT_BUTTON, checkOutButton.isEnabled());
+
+        EditText checkInText = (EditText) findViewById(R.id.check_in_input);
+        outState.putBoolean(CHECK_IN_ENABLED, checkInText.isEnabled());
+        outState.putString(CHECK_IN_TEXT, checkInText.getText().toString());
+
+        EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
+        outState.putBoolean(CHECK_OUT_ENABLED, checkOutText.isEnabled());
+        outState.putString(CHECK_OUT_TEXT, checkOutText.getText().toString());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         startStation = savedInstanceState.getString(LAST_START);
         endStation = savedInstanceState.getString(LAST_DESTINATION);
+        checkInButton.setEnabled(savedInstanceState.getBoolean(CHECK_IN_BUTTON));
+        checkOutButton.setEnabled(savedInstanceState.getBoolean(CHECK_OUT_BUTTON));
+
+        EditText checkInText = (EditText) findViewById(R.id.check_in_input);
+        checkInText.setEnabled(savedInstanceState.getBoolean(CHECK_IN_ENABLED));
+        checkInText.setText(savedInstanceState.getString(CHECK_IN_TEXT));
+
+        EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
+        checkOutText.setEnabled(savedInstanceState.getBoolean(CHECK_OUT_ENABLED));
+        checkOutText.setText(savedInstanceState.getString(CHECK_OUT_TEXT));
+
+
     }
 
 }
