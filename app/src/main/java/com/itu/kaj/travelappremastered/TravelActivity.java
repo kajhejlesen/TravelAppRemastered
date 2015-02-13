@@ -13,16 +13,16 @@ import android.widget.Toast;
 public class TravelActivity extends ActionBarActivity {
     private static String startStation = "";
     private static String endStation = "";
-    protected static final String LAST_START = "start";
-    protected static final String LAST_DESTINATION = "destination";
-    protected static final String CHECK_IN_BUTTON = "check_in_button";
-    protected static final String CHECK_OUT_BUTTON = "check_out_button";
-    protected static final String CHECK_IN_ENABLED = "check_in_enabled";
-    protected static final String CHECK_OUT_ENABLED = "check_out_enabled";
-    protected static final String CHECK_IN_TEXT = "check_in_text";
-    protected static final String CHECK_OUT_TEXT = "check_out_text";
+    public static final String LAST_START = "start";
+    public static final String LAST_DESTINATION = "destination";
+    public static final String CHECK_IN_BUTTON = "check_in_button";
+    public static final String CHECK_OUT_BUTTON = "check_out_button";
+    public static final String CHECK_IN_ENABLED = "check_in_enabled";
+    public static final String CHECK_OUT_ENABLED = "check_out_enabled";
+    public static final String CHECK_IN_TEXT = "check_in_text";
+    public static final String CHECK_OUT_TEXT = "check_out_text";
 
-    Button checkInButton, checkOutButton;
+    private Button checkInButton, checkOutButton;
 
 
     @Override
@@ -68,6 +68,7 @@ public class TravelActivity extends ActionBarActivity {
                     checkOutButton.setEnabled(false);
                     checkInText.setEnabled(true);
                     checkOutText.setEnabled(false);
+                    TravelActivity.endStation = "";
 
                     Toast.makeText(TravelActivity.this, "You are hopefully at your destination", Toast.LENGTH_SHORT).show();
                 }
