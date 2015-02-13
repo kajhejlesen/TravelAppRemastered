@@ -14,13 +14,14 @@ import android.widget.Toast;
 public class TravelActivity extends ActionBarActivity {
     private static String startStation = "";
     private static String endStation = "";
+    protected static final String LAST_START = "start";
+    protected static final String LAST_DESTINATION = "destination";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel);
-
-
 
         Button checkInButton = (Button) findViewById(R.id.check_in_button);
         checkInButton.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +87,10 @@ public class TravelActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == Menu.FIRST) {
+            Toast.makeText(this, "From: " + startStation + "\nTo: " + endStation, Toast.LENGTH_LONG).show();
+        }
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -93,4 +98,17 @@ public class TravelActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(LAST_START, startStation);
+        outState.putString(LAST_DESTINATION, endStation);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        startStation = savedInstanceState.getString(LAST_START);
+        endStation = savedInstanceState.getString(LAST_DESTINATION);
+    }
+
 }
