@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 
 public class TravelActivity extends ActionBarActivity {
-    private static String startStation = "";
-    private static String endStation = "";
     public static final String LAST_START = "start";
     public static final String LAST_DESTINATION = "destination";
     public static final String CHECK_IN_BUTTON = "check_in_button";
@@ -21,6 +19,12 @@ public class TravelActivity extends ActionBarActivity {
     public static final String CHECK_OUT_ENABLED = "check_out_enabled";
     public static final String CHECK_IN_TEXT = "check_in_text";
     public static final String CHECK_OUT_TEXT = "check_out_text";
+    public static final String RECEIPT = "receipt";
+
+    private static String startStation = "";
+    private static String endStation = "";
+
+    private static String[] receipt = new String[2];
 
     private Button checkInButton, checkOutButton;
 
@@ -68,7 +72,8 @@ public class TravelActivity extends ActionBarActivity {
                     checkOutButton.setEnabled(false);
                     checkInText.setEnabled(true);
                     checkOutText.setEnabled(false);
-                    TravelActivity.endStation = "";
+                    TravelActivity.receipt[0] = TravelActivity.startStation;
+                    TravelActivity.receipt[1] = TravelActivity.endStation;
 
                     Toast.makeText(TravelActivity.this, "You are hopefully at your destination", Toast.LENGTH_SHORT).show();
                 }
@@ -95,7 +100,7 @@ public class TravelActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == Menu.FIRST) {
-            Toast.makeText(this, "From: " + startStation + "\nTo: " + endStation, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "From: " + receipt[0] + "\nTo: " + receipt[1], Toast.LENGTH_LONG).show();
         }
 
         //noinspection SimplifiableIfStatement
@@ -110,6 +115,7 @@ public class TravelActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(LAST_START, startStation);
         outState.putString(LAST_DESTINATION, endStation);
+        outState.putStringArray(RECEIPT, receipt);
         outState.putBoolean(CHECK_IN_BUTTON, checkInButton.isEnabled());
         outState.putBoolean(CHECK_OUT_BUTTON, checkOutButton.isEnabled());
 
@@ -126,6 +132,7 @@ public class TravelActivity extends ActionBarActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         startStation = savedInstanceState.getString(LAST_START);
         endStation = savedInstanceState.getString(LAST_DESTINATION);
+        receipt = savedInstanceState.getStringArray(RECEIPT);
         checkInButton.setEnabled(savedInstanceState.getBoolean(CHECK_IN_BUTTON));
         checkOutButton.setEnabled(savedInstanceState.getBoolean(CHECK_OUT_BUTTON));
 
