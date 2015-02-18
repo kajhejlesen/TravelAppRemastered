@@ -1,5 +1,6 @@
 package com.itu.kaj.travelappremastered;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,7 +27,7 @@ public class TravelActivity extends ActionBarActivity {
 
     private static String[] receipt = new String[2];
 
-    private Button checkInButton, checkOutButton;
+    private Button checkInButton, checkOutButton, selectInButton, selectOutButton;
 
 
     @Override
@@ -50,6 +51,8 @@ public class TravelActivity extends ActionBarActivity {
                     checkOutButton.setEnabled(true);
                     checkInButton.setEnabled(false);
                     checkOutText.setEnabled(true);
+                    selectInButton.setEnabled(false);
+                    selectOutButton.setEnabled(true);
                 }
             }
         });
@@ -72,6 +75,8 @@ public class TravelActivity extends ActionBarActivity {
                     checkOutButton.setEnabled(false);
                     checkInText.setEnabled(true);
                     checkOutText.setEnabled(false);
+                    selectInButton.setEnabled(true);
+                    selectOutButton.setEnabled(false);
                     TravelActivity.receipt[0] = TravelActivity.startStation;
                     TravelActivity.receipt[1] = TravelActivity.endStation;
 
@@ -80,6 +85,22 @@ public class TravelActivity extends ActionBarActivity {
             }
         });
 
+        selectInButton = (Button) findViewById(R.id.selectInButton);
+        selectInButton.setOnClickListener(new ButtonListener());
+
+        selectOutButton = (Button) findViewById(R.id.selectOutButton);
+        selectOutButton.setOnClickListener(new ButtonListener());
+
+    }
+
+    public class ButtonListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent();
+
+
+        }
     }
 
 
