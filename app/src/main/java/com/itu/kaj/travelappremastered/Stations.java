@@ -1,28 +1,35 @@
 package com.itu.kaj.travelappremastered;
 
 import android.app.ListActivity;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
-
-import java.util.List;
+import android.widget.ListView;
 
 
 public class Stations extends ListActivity {
 
-    private final String[] STATIONS = {"København", "Nordhavn", "Østerbro", "Nørreport"};
+    private final String[] stations = {"København", "Nordhavn", "Østerbro", "Nørreport"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayAdapter<String> statsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, STATIONS);
+        ArrayAdapter<String> statsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
         setListAdapter(statsAdapter);
 
     }
 
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        String value = stations[(int)id];
+        Intent intent = new Intent().putExtra(TravelActivity.SELECTED_STATION_NAME, value);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

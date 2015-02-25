@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 
 public class TravelActivity extends ActionBarActivity {
+    public static final String SELECTED_STATION_NAME = "selected_station";
     public static final String LAST_START = "start";
     public static final String LAST_DESTINATION = "destination";
     public static final String CHECK_IN_BUTTON = "check_in_button";
@@ -21,6 +22,8 @@ public class TravelActivity extends ActionBarActivity {
     public static final String CHECK_IN_TEXT = "check_in_text";
     public static final String CHECK_OUT_TEXT = "check_out_text";
     public static final String RECEIPT = "receipt";
+    public static final int SELECT_IN = 1;
+    public static final int SELECT_OUT = 2;
 
     private static String startStation = "";
     private static String endStation = "";
@@ -97,10 +100,22 @@ public class TravelActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent();
-
-
+            Intent intent = new Intent(TravelActivity.this, Stations.class);
+            if (v.getId() == R.id.selectInButton)
+                startActivityForResult(intent, SELECT_IN);
+            else if (v.getId() == R.id.selectOutButton)
+                startActivityForResult(intent, SELECT_OUT);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) throw new IllegalStateException("RESULT_OK returned not ok");
+        String station = data.getStringExtra(SELECTED_STATION_NAME);
+        EditText checkInText = (EditText) findViewById(R.id.check_in_input);
+        EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
+        if (requestCode == SELECT_IN) checkInText.setText(station);
+        else if (requestCode == SELECT_OUT) checkOutText.setText(station);
     }
 
 
@@ -164,8 +179,6 @@ public class TravelActivity extends ActionBarActivity {
         EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
         checkOutText.setEnabled(savedInstanceState.getBoolean(CHECK_OUT_ENABLED));
         checkOutText.setText(savedInstanceState.getString(CHECK_OUT_TEXT));
-
-
     }
 
 }
