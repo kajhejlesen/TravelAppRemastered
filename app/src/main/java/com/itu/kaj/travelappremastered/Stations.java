@@ -2,7 +2,9 @@ package com.itu.kaj.travelappremastered;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,21 +14,31 @@ import android.widget.ListView;
 
 public class Stations extends ListActivity {
 
-    private final String[] stations = {"København", "Nordhavn", "Østerbro", "Nørreport"};
+    private TravelDAO dao;
+    //private final String[] stations = {"København", "Nordhavn", "Østerbro", "Nørreport"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayAdapter<String> statsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stations);
-        setListAdapter(statsAdapter);
+        SimpleCursorAdapter cursorAdapter;
+        dao = new TravelDAO(this);
+        dao.open();
+        Cursor stations = dao.getStations();
+        startManagingCursor(stations);
+        cursorAdapter = new SimpleCursorAdapter(this,
+                android.R.layout.simple_list_item_1, stations, new String[] { "station" },
+                new int[] { android.R.id.text1 });
 
+        setListAdapter(cursorAdapter);
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        String value = stations[(int)id];
-        Intent intent = new Intent().putExtra(TravelActivity.SELECTED_STATION_NAME, value);
+        Cursor cursor = (Cursor) l.getItemAtPosition(position);
+        Intent intent = new Intent().putExtra(
+                TravelActivity.SELECTED_STATION_NAME,
+                cursor.getString(cursor.getColumnIndexOrThrow("station")));
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -36,6 +48,12 @@ public class Stations extends ListActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_stations, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dao.close();
     }
 
     @Override

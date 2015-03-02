@@ -47,6 +47,10 @@ public class TravelActivity extends ActionBarActivity {
                 if (TravelActivity.startStation.equals(""))
                     Toast.makeText(TravelActivity.this, "Please enter input", Toast.LENGTH_SHORT).show();
                 else {
+                    TravelDAO dao = new TravelDAO(TravelActivity.this);
+                    dao.open();
+                    dao.saveStation(startStation);
+                    dao.close();
                     Button checkOutButton = (Button) findViewById(R.id.check_out_button);
                     Button checkInButton = (Button) findViewById(R.id.check_in_button);
                     EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
@@ -69,6 +73,10 @@ public class TravelActivity extends ActionBarActivity {
                 if (TravelActivity.endStation.equals(""))
                     Toast.makeText(TravelActivity.this, "Please enter input", Toast.LENGTH_SHORT).show();
                 else {
+                    TravelDAO dao = new TravelDAO(TravelActivity.this);
+                    dao.open();
+                    dao.saveStation(endStation);
+                    dao.close();
                     EditText checkInText = (EditText) findViewById(R.id.check_in_input);
                     checkOutText.setText("");
                     checkInText.setText("");
