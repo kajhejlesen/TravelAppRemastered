@@ -4,12 +4,18 @@
     <PreferenceCategory android:title="History Settings" >
 
         <ListPreference
-
+            android:key="list"
+            android:entries="@array/list"
+            android:entryValues="@array/list"
+            android:defaultValue="10"
+            android:summary="@string/list_summary"
+            android:title="@string/list_title"
         />
 
         <Preference
-
-
+            android:key="clr_history"
+            android:title="Clear History"
+            android:summary="If you want your privacy back"
         />
 
 
@@ -18,12 +24,18 @@
     <PreferenceCategory android:title="Station settings" >
 
         <CheckBoxPreference
+            android:title="Check when adding"
+            android:summary="Checks if a station is already added"
+            android:key="edit"
+            android:defaultValue="true"
 
 
         />
 
         <Preference
-
+            android:key="clr_stations"
+            android:title="Clear Stations"
+            android:summary="Remove all user inputted stations"
 
         />
 
