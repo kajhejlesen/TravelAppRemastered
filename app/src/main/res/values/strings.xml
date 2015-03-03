@@ -9,5 +9,8 @@
     <string name="check_out_button">Check Out</string>
     <string name="title_activity_stations">Stations</string>
     <string name="select">Select</string>
+    <string name="title_activity_history">HistoryActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

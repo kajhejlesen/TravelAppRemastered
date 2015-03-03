@@ -1,58 +1,44 @@
 package com.itu.kaj.travelappremastered;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 
-public class Stations extends ListActivity {
+public class HistoryActivity extends ListActivity {
 
     private TravelDAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         SimpleCursorAdapter cursorAdapter;
         dao = new TravelDAO(this);
         dao.open();
-        Cursor stations = dao.getStations();
-        startManagingCursor(stations);
+        Cursor travels = dao.getTravels();
+        startManagingCursor(travels);
         cursorAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1, stations, new String[] { "station" },
-                new int[] { android.R.id.text1 });
+                R.layout.activity_history, travels, new String[] { "start", "destination" },
+                new int[] { R.id.history_view_1, R.id.history_view_2 });
 
         setListAdapter(cursorAdapter);
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Cursor cursor = (Cursor) l.getItemAtPosition(position);
-        Intent intent = new Intent().putExtra(
-                TravelActivity.SELECTED_STATION_NAME,
-                cursor.getString(cursor.getColumnIndexOrThrow("station")));
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stations, menu);
-        return true;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         dao.close();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_history, menu);
+        return true;
     }
 
     @Override

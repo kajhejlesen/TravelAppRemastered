@@ -20,6 +20,10 @@
             android:name=".Stations"
             android:label="@string/title_activity_stations" >
         </activity>
+        <activity
+            android:name=".HistoryActivity"
+            android:label="@string/title_activity_history" >
+        </activity>
     </application>
 
 </manifest>

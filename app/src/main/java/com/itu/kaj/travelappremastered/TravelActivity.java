@@ -76,6 +76,7 @@ public class TravelActivity extends ActionBarActivity {
                     TravelDAO dao = new TravelDAO(TravelActivity.this);
                     dao.open();
                     dao.saveStation(endStation);
+                    dao.saveTravel(startStation, endStation);
                     dao.close();
                     EditText checkInText = (EditText) findViewById(R.id.check_in_input);
                     checkOutText.setText("");
@@ -131,7 +132,7 @@ public class TravelActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.menu_travel, menu);
-        MenuItem item = menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, "Reciept");
+        MenuItem item = menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, "History");
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return true;
     }
@@ -144,7 +145,8 @@ public class TravelActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == Menu.FIRST) {
-            Toast.makeText(this, "From: " + receipt[0] + "\nTo: " + receipt[1], Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, HistoryActivity.class);
+            startActivity(intent);
         }
 
         //noinspection SimplifiableIfStatement
