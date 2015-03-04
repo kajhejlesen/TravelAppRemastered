@@ -2,6 +2,7 @@ package com.itu.kaj.travelappremastered;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -55,8 +56,14 @@ public class TravelDAO {
             values.put(STATIONS_STATION, station);
             travelDatabase.insert(STATIONS_TABLE, null, values);
         }
+    }
 
+    public void clearStations() {
+        travelDatabase.delete(STATIONS_TABLE, null, null);
+    }
 
+    public void clearTravels() {
+        travelDatabase.delete(TRAVELS_TABLE, null, null);
     }
 
 }

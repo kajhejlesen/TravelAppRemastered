@@ -24,6 +24,8 @@ public class Stations extends ListActivity {
         dao = new TravelDAO(this);
         dao.open();
         Cursor stations = dao.getStations();
+
+
         startManagingCursor(stations);
         cursorAdapter = new SimpleCursorAdapter(this,
                 android.R.layout.simple_list_item_1, stations, new String[] { "station" },

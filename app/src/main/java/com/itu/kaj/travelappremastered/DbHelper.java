@@ -15,7 +15,7 @@ public class DbHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-       db.execSQL("CREATE TABLE travels (_id integer primary key autoincrement, start text, destination text");
+       db.execSQL("CREATE TABLE travels (_id integer primary key autoincrement, start text, destination text)");
        db.execSQL("CREATE TABLE stations (_id integer primary key autoincrement, station text)");
     }
 

@@ -119,12 +119,13 @@ public class TravelActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) throw new IllegalStateException("RESULT_OK returned not ok");
-        String station = data.getStringExtra(SELECTED_STATION_NAME);
-        EditText checkInText = (EditText) findViewById(R.id.check_in_input);
-        EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
-        if (requestCode == SELECT_IN) checkInText.setText(station);
-        else if (requestCode == SELECT_OUT) checkOutText.setText(station);
+        if (resultCode == RESULT_OK) {
+            String station = data.getStringExtra(SELECTED_STATION_NAME);
+            EditText checkInText = (EditText) findViewById(R.id.check_in_input);
+            EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
+            if (requestCode == SELECT_IN) checkInText.setText(station);
+            else if (requestCode == SELECT_OUT) checkOutText.setText(station);
+        }
     }
 
 
@@ -132,8 +133,9 @@ public class TravelActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.menu_travel, menu);
-        MenuItem item = menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, "History");
+        MenuItem item = menu.add(Menu.NONE,Menu.FIRST, Menu.NONE, "History");
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        getMenuInflater().inflate(R.menu.menu_travel,menu);
         return true;
     }
 
@@ -151,6 +153,8 @@ public class TravelActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
             return true;
         }
 
