@@ -22,8 +22,8 @@ public class HistoryActivity extends ListActivity {
         Cursor travels = dao.getTravels();
         startManagingCursor(travels);
         cursorAdapter = new SimpleCursorAdapter(this,
-                R.layout.activity_history, travels, new String[] { "start", "destination" },
-                new int[] { R.id.history_view_1, R.id.history_view_2 });
+                R.layout.activity_history, travels, new String[] { "start", "destination", "distance"},
+                new int[] { R.id.history_view_1, R.id.history_view_2, R.id.history_view_3 });
 
         setListAdapter(cursorAdapter);
     }

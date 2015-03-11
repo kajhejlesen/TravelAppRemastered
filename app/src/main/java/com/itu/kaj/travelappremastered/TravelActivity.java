@@ -1,6 +1,10 @@
 package com.itu.kaj.travelappremastered;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,7 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.List;
 
 
 public class TravelActivity extends ActionBarActivity {
@@ -29,7 +37,9 @@ public class TravelActivity extends ActionBarActivity {
     private static String endStation = "";
 
     private static String[] receipt = new String[2];
+    TravelDAO dao;
 
+    private TextView getLocation;
     private Button checkInButton, checkOutButton, selectInButton, selectOutButton;
 
 
@@ -37,6 +47,18 @@ public class TravelActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel);
+        dao = new TravelDAO(this);
+        dao.open();
+
+        getLocation = (TextView) findViewById(R.id.get_location);
+        getLocation.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                LocationManager lm;
+                // not finished
+            }
+        });
 
         checkInButton = (Button) findViewById(R.id.check_in_button);
         checkInButton.setOnClickListener(new View.OnClickListener() {
@@ -47,10 +69,7 @@ public class TravelActivity extends ActionBarActivity {
                 if (TravelActivity.startStation.equals(""))
                     Toast.makeText(TravelActivity.this, "Please enter input", Toast.LENGTH_SHORT).show();
                 else {
-                    TravelDAO dao = new TravelDAO(TravelActivity.this);
-                    dao.open();
                     dao.saveStation(startStation);
-                    dao.close();
                     Button checkOutButton = (Button) findViewById(R.id.check_out_button);
                     Button checkInButton = (Button) findViewById(R.id.check_in_button);
                     EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
@@ -69,15 +88,11 @@ public class TravelActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 EditText checkOutText = (EditText) findViewById(R.id.check_out_input);
-                TravelActivity.endStation = checkOutText.getText().toString();
-                if (TravelActivity.endStation.equals(""))
+                endStation = checkOutText.getText().toString();
+                if (endStation.equals(""))
                     Toast.makeText(TravelActivity.this, "Please enter input", Toast.LENGTH_SHORT).show();
                 else {
-                    TravelDAO dao = new TravelDAO(TravelActivity.this);
-                    dao.open();
-                    dao.saveStation(endStation);
-                    dao.saveTravel(startStation, endStation);
-                    dao.close();
+
                     EditText checkInText = (EditText) findViewById(R.id.check_in_input);
                     checkOutText.setText("");
                     checkInText.setText("");
@@ -89,10 +104,44 @@ public class TravelActivity extends ActionBarActivity {
                     checkOutText.setEnabled(false);
                     selectInButton.setEnabled(true);
                     selectOutButton.setEnabled(false);
-                    TravelActivity.receipt[0] = TravelActivity.startStation;
-                    TravelActivity.receipt[1] = TravelActivity.endStation;
+                    TravelActivity.receipt[0] = startStation;
+                    TravelActivity.receipt[1] = endStation;
 
-                    Toast.makeText(TravelActivity.this, "You are hopefully at your destination", Toast.LENGTH_SHORT).show();
+                    double distance = 0.0;
+
+
+                    if (Geocoder.isPresent()) {
+                        Geocoder geoCoder = new Geocoder(TravelActivity.this);
+                        Location locationStart = null;
+                        Location locationEnd = null;
+                        try {
+                            List<Address> aStart = geoCoder.getFromLocationName(TravelActivity.startStation, 1);
+                            List<Address> aEnd = geoCoder.getFromLocationName(TravelActivity.endStation, 1);
+                            if (aStart.size() > 0) {
+                                Address start = aStart.get(0);
+                                locationStart = new Location(start.getAddressLine(0));
+                                locationStart.setLatitude(start.getLatitude());
+                                locationStart.setLongitude(start.getLongitude());
+                            }
+                            if (aEnd.size() > 0) {
+                                Address end = aEnd.get(0);
+                                locationEnd = new Location(end.getAddressLine(0));
+                                locationEnd.setLatitude(end.getLatitude());
+                                locationEnd.setLongitude(end.getLongitude());
+
+                            }
+                        } catch (IOException ioe) {
+                            System.out.println("Wrong locationdata");
+                        }
+
+                        if (locationStart != null && locationEnd != null) {
+                            distance = locationEnd.distanceTo(locationStart) / 1000.0;
+                        }
+                    }
+                    dao.saveStation(endStation);
+                    dao.saveTravel(startStation, endStation, distance);
+
+                    Toast.makeText(TravelActivity.this, "You have travelled " + distance + " km", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -166,6 +215,12 @@ public class TravelActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dao.close();
     }
 
     @Override

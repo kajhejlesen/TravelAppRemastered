@@ -10,10 +10,16 @@
         android:id="@+id/history_view_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="2" />
 
     <TextView
         android:id="@+id/history_view_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" />
+
+    <TextView
+        android:id="@+id/history_view_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />

@@ -10,12 +10,12 @@ import android.database.sqlite.SQLiteDatabase;
 public class DbHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     public DbHelper(Context context) {
-        super(context, "travel", null, 1);
+        super(context, "travel", null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-       db.execSQL("CREATE TABLE travels (_id integer primary key autoincrement, start text, destination text)");
+       db.execSQL("CREATE TABLE travels (_id integer primary key autoincrement, start text, destination text, distance real)");
        db.execSQL("CREATE TABLE stations (_id integer primary key autoincrement, station text)");
     }
 

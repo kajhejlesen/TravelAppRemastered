@@ -18,6 +18,7 @@ public class TravelDAO {
     private final static String TRAVELS_TABLE = "travels";
     private final static String TRAVEL_START = "start";
     private final static String TRAVEL_DESTINATION = "destination";
+    private final static String TRAVEL_DISTANCE = "distance";
     private SharedPreferences preferences;
 
     public TravelDAO(Context context) {
@@ -37,14 +38,15 @@ public class TravelDAO {
 
     public Cursor getTravels() {
         String limit = preferences.getString("history_length", "10");
-        Cursor cursor = travelDatabase.query(TRAVELS_TABLE, new String[] {"_id", TRAVEL_START, TRAVEL_DESTINATION}, null,null,null,null, "_id DESC", limit);
+        Cursor cursor = travelDatabase.query(TRAVELS_TABLE, new String[] {"_id", TRAVEL_START, TRAVEL_DESTINATION, TRAVEL_DISTANCE}, null,null,null,null, "_id DESC", limit);
         return cursor;
     }
 
-    public void saveTravel(String start, String destination) {
+    public void saveTravel(String start, String destination, double distance) {
         ContentValues values = new ContentValues();
         values.put(TRAVEL_START, start);
         values.put(TRAVEL_DESTINATION, destination);
+        values.put(TRAVEL_DISTANCE, distance);
         travelDatabase.insert(TRAVELS_TABLE, null, values);
     }
 
