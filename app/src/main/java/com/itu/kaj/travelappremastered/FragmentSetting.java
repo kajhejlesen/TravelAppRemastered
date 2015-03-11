@@ -6,6 +6,7 @@ import android.preference.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 /**
@@ -38,15 +39,17 @@ public class FragmentSetting extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 dao.clearTravels();
+                Toast.makeText(getActivity(), "Travel History deleted.", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
 
         Preference clearStations = findPreference("clr_stations");
-        clearHistory.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        clearStations.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 dao.clearStations();
+                Toast.makeText(getActivity(), "Stations deleted.", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

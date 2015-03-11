@@ -133,8 +133,10 @@ public class TravelActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.menu_travel, menu);
-        MenuItem item = menu.add(Menu.NONE,Menu.FIRST, Menu.NONE, "History");
+        MenuItem item = menu.add(Menu.NONE, 1, Menu.FIRST, "History");
+        MenuItem item2 = menu.add(Menu.NONE, 2, Menu.FIRST, "Invite");
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        item2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         getMenuInflater().inflate(R.menu.menu_travel,menu);
         return true;
     }
@@ -146,8 +148,13 @@ public class TravelActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == Menu.FIRST) {
+        if (id == 1) {
             Intent intent = new Intent(this, HistoryActivity.class);
+            startActivity(intent);
+        }
+
+        if (id == 2) {
+            Intent intent = new Intent(this, InviteActivity.class);
             startActivity(intent);
         }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Travel App remastered</string>
+    <string name="app_name">Travel App</string>
     <string name="action_settings">Settings</string>
     <string name="check_in_text">Enter Check-in Station:</string>
     <string name="check_out_text">Enter Check-out Station:</string>
@@ -12,8 +12,8 @@
     <string name="title_activity_history">HistoryActivity</string>
 
 
-    <string name="list_summary">Travels to show.</string>
-    <string name="list_title"></string>
+    <string name="list_summary">Amount of travels shown in the history.</string>
+    <string name="list_title">Number of travels shown</string>
     <string-array name="list">
         <item>5</item>
         <item>10</item>
@@ -27,8 +27,9 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_setting">SettingActivity</string>
+    <string name="add_station_check">Station added already</string>
+    <string name="title_activity_invite">InviteActivity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

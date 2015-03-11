@@ -18,9 +18,12 @@ public class TravelDAO {
     private final static String TRAVELS_TABLE = "travels";
     private final static String TRAVEL_START = "start";
     private final static String TRAVEL_DESTINATION = "destination";
+    private SharedPreferences preferences;
 
     public TravelDAO(Context context) {
         dbHelper = new DbHelper(context);
+        preferences = context.getSharedPreferences(context.getPackageName()
+                + "_preferences", Context.MODE_PRIVATE);
     }
 
 
@@ -33,7 +36,8 @@ public class TravelDAO {
     }
 
     public Cursor getTravels() {
-        Cursor cursor = travelDatabase.query(TRAVELS_TABLE, new String[] {"_id", TRAVEL_START, TRAVEL_DESTINATION}, null,null,null,null, "_id");
+        String limit = preferences.getString("history_length", "10");
+        Cursor cursor = travelDatabase.query(TRAVELS_TABLE, new String[] {"_id", TRAVEL_START, TRAVEL_DESTINATION}, null,null,null,null, "_id DESC", limit);
         return cursor;
     }
 
@@ -51,7 +55,7 @@ public class TravelDAO {
 
     public void saveStation(String station) {
         Cursor cursor = travelDatabase.rawQuery("SELECT station FROM stations WHERE station LIKE '" + station + "'", null);
-        if (cursor.getCount() == 0) {
+        if (cursor.getCount() == 0 || !preferences.getBoolean("add_station_check", true)) {
             ContentValues values = new ContentValues();
             values.put(STATIONS_STATION, station);
             travelDatabase.insert(STATIONS_TABLE, null, values);

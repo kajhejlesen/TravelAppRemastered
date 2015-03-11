@@ -1,26 +1,24 @@
 package com.itu.kaj.travelappremastered;
 
-import android.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class SettingActivity extends ActionBarActivity {
+public class InviteActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_invite);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_setting, menu);
-
+        getMenuInflater().inflate(R.menu.menu_invite, menu);
         return true;
     }
 
@@ -31,14 +29,7 @@ public class SettingActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-/*
-if (id == android.R.id.home) {
-this.finish();
-return true;
-}
-noinspection SimplifiableIfStatement
-*/
-
+        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

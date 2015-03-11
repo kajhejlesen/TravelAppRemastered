@@ -4,7 +4,7 @@
     <PreferenceCategory android:title="History Settings" >
 
         <ListPreference
-            android:key="list"
+            android:key="history_length"
             android:entries="@array/list"
             android:entryValues="@array/list"
             android:defaultValue="10"
@@ -24,9 +24,9 @@
     <PreferenceCategory android:title="Station settings" >
 
         <CheckBoxPreference
-            android:title="Check when adding"
+            android:title="@string/add_station_check"
             android:summary="Checks if a station is already added"
-            android:key="edit"
+            android:key="add_station_check"
             android:defaultValue="true"
 
 
